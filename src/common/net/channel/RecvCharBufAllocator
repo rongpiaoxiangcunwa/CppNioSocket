@@ -1,0 +1,16 @@
+
+#ifndef _RecvByteBufAllocator_hpp_
+#define  _RecvByteBufAllocator_hpp_
+
+
+namespace comm { 
+namespace net {
+	class RecvCharBufAllocator {
+	public:
+		
+	};
+}//namespace net
+}//namespace comm
+
+#endif
+
