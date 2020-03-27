@@ -19,7 +19,7 @@ CppNioSocket 是使用C++ BOOST实现的基于NIO和事件驱动的客户/服务
 # 性能测试：
     测试服务端采用了主从线程模型（2个acceptor线程， 2个work线程）。
     客户端模拟2万个TCP连接，QPS为2万。服务端CPU使用率为 68%, 内存占用为 168Mb
-    ![image](https://github.com/rongpiaoxiangcunwa/CppNioSocket/blob/master/third_party_libs/libs/qps.jpeg)
+  
     
 
 # 快速开始：
