@@ -139,7 +139,7 @@ class CompileScheduler:
                 print( 'threads: %d' % self.compileThreads )
 		self.compilationState = {}
 		self.pendingComponents = Queue.Queue()
-		self.highPriorityCompileComponents = self.components.getComponentDepends( ['lppserver','spu'], True )
+		self.highPriorityCompileComponents = self.components.getComponentDepends( [], True )
 		self.componentCompileTime = ComponentCompileTime()
 		self.lock = threading.Lock()
 
@@ -153,8 +153,6 @@ class CompileScheduler:
 			else:
 				self.compilationState[component] = 'Finished'
 
-		if 'LPP' in self.toBeCompiledComponents:
-			self._addToPendingQueue( ['LPP'] )
 
 		componentsWithOutDepends = set( self.toBeCompiledComponents ).intersection( set( self.components.getComponentsWithSolvedDepends([]) ) )
 		self._addToPendingQueue( componentsWithOutDepends )
@@ -184,8 +182,7 @@ class CompileScheduler:
 
 	def _getCompileJobs( self, component ):
 
-		#more process to compile the LPP,spu and lppserver
-		if component in ['LPP','spu','lppserver']:
+		if component in ['sctp_server']:
 			if os.environ.has_key('MAKE_JOBS'):
 				return int (os.environ.get('MAKE_JOBS') ) 
 			return 4
@@ -225,9 +222,6 @@ class CompileScheduler:
 			if self.compilationState[ p ] == 'Finished':
 				finishedComponents.append( p )
 
-		#find all components can be compiled
-		#if component == 'LPP':
-		#	self._addToPendingQueue( ['spu','lppserver'] )
 
 		solvedDependsComponents = set( self.components.getComponentsWithSolvedDepends( finishedComponents ) ).intersection( set( self.toBeCompiledComponents ) )
 		self._addToPendingQueue( solvedDependsComponents )
